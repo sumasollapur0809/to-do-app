@@ -8,31 +8,37 @@ function addlist(){
     else{
         let li = document.createElement("li");
 
-        // ⏰ Get current time
+        // ⏰ Get time (HH:MM only)
         let now = new Date();
-        let time = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
 
-        // Task text
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        let time = hours + ":" + minutes;
+
+      
         let textNode = document.createTextNode(IB.value + " ");
         li.appendChild(textNode);
 
-        // ⏰ Time display
+ 
         let timeSpan = document.createElement("small");
         timeSpan.innerHTML = "(" + time + ")";
         timeSpan.className = "time";
         li.appendChild(timeSpan);
 
-        // ✏️ Edit button
+     
         let edit = document.createElement("span");
         edit.innerHTML = " 🖋️";
         edit.className = "edit";
         li.appendChild(edit);
 
-        // ❌ Delete button
-        let span = document.createElement("span");
-        span.innerHTML = "\u00d7";
-        span.className = "delete";
-        li.appendChild(span);
+       
+        let del = document.createElement("span");
+        del.innerHTML = "\u00d7";
+        del.className = "delete";
+        li.appendChild(del);
 
         LC.appendChild(li);
     }
@@ -42,7 +48,7 @@ function addlist(){
 
 LC.addEventListener("click", function(e){
 
-    // ✅ Mark complete
+   
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
 
@@ -53,13 +59,12 @@ LC.addEventListener("click", function(e){
         saveinfo();
     }
 
-    // ❌ Delete
+
     else if(e.target.className === "delete"){
         e.target.parentElement.remove();
         saveinfo();
     }
 
-    // ✏️ Edit (fixed so time stays safe)
     else if(e.target.className === "edit"){
         let li = e.target.parentElement;
 
