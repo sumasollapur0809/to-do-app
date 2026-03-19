@@ -9,13 +9,11 @@ function addlist(){
         let li = document.createElement("li");
         li.appendChild(document.createTextNode(IB.value));
 
-        
         let edit = document.createElement("span");
         edit.innerHTML = " ✏️";
         edit.className = "edit";
         li.appendChild(edit);
 
-       
         let span = document.createElement("span");
         span.innerHTML = "\u00d7";
         span.className = "delete";
@@ -29,24 +27,21 @@ function addlist(){
 
 LC.addEventListener("click", function(e){
 
-  
     if(e.target.tagName === "LI"){
         e.target.classList.toggle("checked");
 
         if(e.target.classList.contains("checked")){
-            alert("Task completed successfully ✅");
+            showPopup(); 
         }
 
         saveinfo();
     }
 
-   
     else if(e.target.className === "delete"){
         e.target.parentElement.remove();
         saveinfo();
     }
 
-  
     else if(e.target.className === "edit"){
         let li = e.target.parentElement;
         let taskText = li.childNodes[0].nodeValue;
@@ -60,6 +55,15 @@ LC.addEventListener("click", function(e){
     }
 
 }, false);
+
+function showPopup(){
+    let popup = document.getElementById("pop-up");
+    popup.classList.add("show");
+
+    setTimeout(() => {
+        popup.classList.remove("show");
+    }, 2000);
+}
 
 function saveinfo(){
     localStorage.setItem("data", LC.innerHTML);
